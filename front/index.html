@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	    <meta charset="UTF-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    <title>SconicScrib</title>
+	    <link rel="stylesheet" href="style.css" />
+	    <script src="config.js"></script>
+	    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+</head>
+<body>
+
+
+<div class="top-bar">
+
+    <!-- LEFT NAVIGATION -->
+    <div class="nav-left">
+        <a href="home.html">Home</a>
+        <a href="about.html">About</a>
+        <!-- <a href="#">Collections</a> -->
+        <a href="journal.html">Journal</a>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="nav-right">
+
+        <!-- PLAN DROPDOWN (Your Existing Version System) -->
+        <div class="version-wrapper">
+            <button class="version-btn" id="versionBtn">
+                Silver <span class="caret">▾</span>
+            </button>
+
+            <div class="version-popup" id="versionPopup">
+                <div class="version-item active" id="silverOption">
+                    <div>
+                        <strong>Standard</strong>
+                        <p>Basic voice productivity</p>
+                    </div>
+                    <span id="silverIcon"><span class="check">✓</span></span>
+                </div>
+
+                <div class="version-item" id="goldOption">
+                    <div>
+                        <strong>Gold</strong>
+                        <p>Smart scheduling + AI insights</p>
+                    </div>
+                    <span id="goldIcon">
+                        <button class="upgrade-btn">Upgrade</button>
+                    </span>
+                </div>
+
+                <div class="version-item" id="platinumOption">
+                    <div>
+                        <strong>Platinum</strong>
+                        <p>Unlimited, agents, automation</p>
+                    </div>
+                    <span id="platinumIcon">
+                        <button class="upgrade-btn">Upgrade</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROFILE -->
+        <div class="profile-container">
+            <button id="profileBtn" class="profile-btn">👤</button>
+
+            <div class="profile-dropdown" id="profileDropdown">
+                <div class="dropdown-header">
+                    <p>Logged in as: <span id="profileUsername">Priya</span></p>
+                    <p class="user-email" id="displayEmail"></p>
+                </div>
+
+                <hr>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- OUTSIDE TASKBAR 3 DOT MENU -->
+<!-- SIDEBAR TOGGLE BUTTON -->
+<button class="menu-toggle" id="menuToggle" aria-label="Open menu">⋮</button>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+
+    <div class="sidebar-content">
+
+        <h3 class="sidebar-title">NOTES</h3>
+
+        <ul class="sidebar-menu">
+            <li>AI Enhance</li>
+            <li>Grammar Check</li>
+            <li>AI Custom Prompt</li>
+            <li>Quick to-do list</li>
+            <li>Quick main point</li>
+            <li>AI Multimodel</li>
+            <li>AI Clean up</li>
+        </ul>
+
+    </div>
+
+    <!-- Bottom buttons -->
+    <div class="sidebar-bottom">
+        <button onclick="window.location.href='home.html'">Home</button>
+        <button onclick="window.location.href='about.html'">About</button>
+    </div>
+
+</div>
+<div class="container">
+
+    <!-- CHAT STYLE INPUT -->
+     <div class="chat-input-wrapper">
+
+    <textarea 
+        class="chat-textarea" 
+        id="transcriptText" 
+        placeholder="Speak or type here...">
+    </textarea>
+
+    <button class="chat-clear-btn" id="clearTranscriptBtn" aria-label="Clear text">×</button>
+
+    <!-- MIC BUTTON ON RIGHT -->
+    <button class="chat-mic-btn" id="micButton" aria-label="Tap to speak">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+            viewBox="0 0 24 24" fill="none" 
+            stroke="currentColor" stroke-width="2" 
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="2" width="6" height="12" rx="3"/>
+            <path d="M5 10v2a7 7 0 0 0 14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
+            <line x1="8" y1="22" x2="16" y2="22"/>
+        </svg>
+    </button>
+
+</div>
+
+    <!-- SAVE BUTTON -->
+    <button class="save-btn" id="saveBtn">Save Manually</button>
+    <p class="save-status" id="saveStatus">Saved to Schedule!</p>
+
+    <!-- CATEGORY CARDS -->
+    <div class="cards-container">
+        <div class="category-card notes" onclick="fetchAndView('notes')">
+            <span class="category-title">Notes</span>
+            <span class="category-count" id="notesCount">0</span>
+        </div>
+
+        <div class="category-card reminder" onclick="fetchAndView('reminder')">
+            <span class="category-title">Reminders</span>
+            <span class="category-count" id="reminderCount">0</span>
+        </div>
+
+        <div class="category-card events" onclick="fetchAndView('events')">
+            <span class="category-title">Events</span>
+            <span class="category-count" id="eventsCount">0</span>
+        </div>
+    </div>
+
+</div>
+<div class="bottom-section">
+    <button class="schedule-button" onclick="fetchAndView('schedule')">
+        View Full Schedule (<span id="scheduleCount">0</span>)
+    </button>
+</div>
+
+<!-- MAIN MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+
+    <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+            <h2 id="modalTitle">Schedule</h2>
+            <button class="modal-close" id="closeModalBtn">&times;</button>
+        </div>
+
+        <!-- Modal Items Container -->
+        <div id="modalItems"></div>
+
+        <!-- ADD TEMPLATE RIGHT HERE -->
+        <template id="scheduleItemTemplate">
+
+            <div class="item-row">
+
+                <div class="item-container">
+
+                    <div class="item-left">
+
+                        <span class="item-icon"></span>
+
+                        <div class="item-content">
+
+                            <div class="item-text"></div>
+
+                            <div class="item-time"></div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="item-actions">
+
+                        <button class="action-btn btn-done"></button>
+
+                        <button class="action-btn btn-edit">Edit</button>
+
+                        <button class="action-btn btn-delete">Delete</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </template>
+        <!-- TEMPLATE ENDS HERE -->
+         <template id="noteTemplate">
+  <div class="item-row">
+    <textarea class="edit-note"></textarea>
+
+    <div class="note-actions">
+      <button class="action-btn btn-done note-save-btn">Save</button>
+      <button class="action-btn btn-delete note-delete-btn">Delete</button>
+    </div>
+  </div>
+</template>
+
+    </div>
+
+</div>
+
+<!-- REMINDER POPUP -->
+<div class="reminder-popup" id="reminderPopup">
+    <div class="popup-header">
+        <span>Reminder</span>
+        <button id="closePopup">×</button>
+    </div>
+    <div class="popup-body" id="popupText"></div>
+</div>
+<!-- UPGRADE MODAL -->
+<div class="upgrade-overlay" id="upgradeOverlay">
+    <div class="upgrade-modal">
+
+        <div class="upgrade-header">
+            <h2>Upgrade your plan</h2>
+            <button class="close-upgrade" id="closeUpgrade">×</button>
+        </div>
+
+        <div class="plan-container">
+
+            <!-- Silver -->
+            <div class="plan-card active-silver" id="silverCard">
+                <div class="card-header">
+                    <h3>Silver</h3>
+                </div>
+                <p class="price">₹0</p>
+                <button class="plan-btn" id="silverBtn">Current Plan</button>
+                <ul>
+                    <li>Basic voice notes</li>
+                    <li>Limited reminders</li>
+                    <li>Standard AI</li>
+                </ul>
+            </div>
+
+            <!-- Gold -->
+            <div class="plan-card" id="goldCard">
+                <div class="card-header">
+                    <h3>Gold</h3>
+                </div>
+                <p class="price">₹1,99 <span>/ month</span></p>
+                <button class="plan-btn pay-btn" data-plan="gold">Get Gold</button>
+                <ul>
+                    <li>Smart scheduling</li>
+                    <li>Long conversations</li>
+                    <li>Priority AI</li>
+                </ul>
+            </div>
+
+            <!-- Platinum -->
+            <div class="plan-card" id="platinumCard">
+                <div class="card-header">
+                    <h3>Platinum</h3>
+                </div>
+                <p class="price">₹1,990 <span>/ month</span></p>
+                <button class="plan-btn pay-btn" data-plan="platinum">Get Platinum</button>
+                <ul>
+                    <li>Unlimited everything</li>
+                    <li>AI agents & automation</li>
+                    <li>Maximum memory</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- Coupon -->
+        <div class="coupon-wrapper">
+            <button id="showCouponInputBtn" class="coupon-link">
+                Have a coupon code?
+            </button>
+
+            <div id="couponContainer" class="coupon-container">
+                <input type="text" id="couponInput" placeholder="Enter code (e.g. pro100)" />
+                <button id="applyCouponBtn" class="apply-btn">→</button>
+            </div>
+
+            <p id="couponMessage" class="coupon-msg"></p>
+        </div>
+
+    </div>
+</div>
+
+<!-- FLOATING HELP BUTTON -->
+
+<div class="help-widget" id="helpWidget">
+
+    <div class="help-header">
+        <span>Quick Help</span>
+        <button id="closeHelp">×</button>
+    </div>
+
+    <div class="help-body" id="helpBody">
+        <div class="bot-msg">
+            Hi 👋 I can help you quickly. Choose a question below.
+        </div>
+    </div>
+
+   <div class="help-options">
+    <button data-answer="Tap the microphone and start speaking your task, note, reminder, or event. When you stop speaking, tap Save to store it securely in your account.">
+        How do I use this app?
+    </button>
+
+    <button data-answer="Yes. Your data is stored securely in the backend database and linked only to your account. Voice audio is never recorded or stored.">
+        Is my data safe?
+    </button>
+
+    <button data-answer="The app uses your browser’s built-in speech recognition engine to convert speech into text. It listens only when you tap the mic button.">
+        How does voice recording work?
+    </button>
+
+    <button data-answer="Yes. Internet is required for voice recognition, authentication, and saving data to the backend.">
+        Do I need internet?
+    </button>
+
+    <button data-answer="The app automatically detects your intent. Notes, reminders, events, and schedules are saved in their respective sections.">
+        How are notes, reminders, and events saved?
+    </button>
+
+    <button data-answer="Click on any category card to view your saved notes, reminders, events, or schedule.">
+        How do I access my saved data?
+    </button>
+
+    <button data-answer="Yes. You must sign in using email/password or Google login so your data remains private and secure.">
+        Do I need to create an account?
+    </button>
+
+    <button data-answer="Currently English is supported. Hindi and Marathi support are planned.">
+        What languages are supported?
+    </button>
+
+    <button data-answer="Yes. Your data is stored in the backend and accessible from any device after login.">
+        Will my data sync across devices?
+    </button>
+
+    <button data-answer="Yes. The app works on modern mobile browsers. A dedicated mobile app is planned.">
+        Can I use this app on mobile?
+    </button>
+</div>
+
+
+</div>
+
+
+<!-- FLOATING HELP BUTTON -->
+<!-- FLOATING HELP BUTTON -->
+<button class="help-fab" id="openHelp" title="Assistant">
+
+    <div id="bot-animation" style="width:60px;height:60px;"></div>
+</button>
+<div class="lottie-bottom">
+  <lottie-player
+    src="assets/Looping.json"
+    background="transparent"
+    speed="0.5"
+    loop
+    autoplay>
+  </lottie-player>
+</div>
+
+<div class="main-clock" id="mainClock" aria-live="polite">
+    <div class="clock-time" id="clockTime">--:--:--</div>
+    <div class="clock-date" id="clockDate">-- --- ----</div>
+    <div class="clock-day" id="clockDay">--------</div>
+</div>
+
+<script src="script.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+<script>
+
+
+
+// Bot animation
+lottie.loadAnimation({
+    container: document.getElementById("bot-animation"),
+    renderer: "svg",
+    loop: true,
+    autoplay: true,
+    path: "assets/Bot.json"
+});
+
+
+
+</script>
+
+</body>
+</html>
+
+

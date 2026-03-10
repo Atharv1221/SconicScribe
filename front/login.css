@@ -1,0 +1,527 @@
+/* =============================================================================
+   LOGIN PAGE - BLUE GLASS THEME
+   ============================================================================= */
+
+:root {
+    --bg-main: #f1f5f9;
+    --bg-elevated: #e2e8f0;
+    --surface-main: #ffffff;
+    --surface-hover: #f8fafc;
+    --surface-active: #e2e8f0;
+    --text-main: #1e293b;
+    --text-muted: #475569;
+    --text-soft: #64748b;
+    --olive-primary: #2563eb;
+    --olive-strong: #1d4ed8;
+    --olive-soft: #60a5fa;
+    --border-light: #cbd5e1;
+    --border-medium: #94a3b8;
+    --glow-soft: 0 8px 24px rgba(37, 99, 235, 0.18);
+    --glow-medium: 0 14px 34px rgba(37, 99, 235, 0.28);
+    --glow-strong: 0 20px 44px rgba(37, 99, 235, 0.36);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+    min-height: 100vh;
+    background: radial-gradient(circle at 20% 0%, #eef3ff 0%, #e5e9f4 45%, #e2e6f2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    color: var(--text-main);
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 82% 14%, rgba(147, 197, 253, 0.24), transparent 35%),
+        radial-gradient(circle at 10% 78%, rgba(59, 130, 246, 0.12), transparent 34%);
+    z-index: -1;
+}
+
+.container {
+    width: 100%;
+    max-width: 28rem;
+}
+
+/* =============================================================================
+   CARD WITH OLIVE GLOW
+   ============================================================================= */
+
+.card {
+    background: var(--surface-main);
+    border: 1px solid #b9c9eb;
+    border-radius: 1rem;
+    box-shadow: var(--glow-soft);
+    backdrop-filter: blur(6px);
+    padding: 2.5rem 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--glow-medium);
+}
+
+/* =============================================================================
+   BRANDING
+   ============================================================================= */
+
+.app-brand {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.app-name {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--olive-strong);
+    margin-bottom: 4px;
+}
+
+.app-tagline {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+/* =============================================================================
+   HEADER
+   ============================================================================= */
+
+.header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.header p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+/* =============================================================================
+   FORM ELEMENTS
+   ============================================================================= */
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--text-main);
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper .icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    transition: color 0.2s;
+}
+
+.input-wrapper input:focus + .icon,
+.input-wrapper input:focus ~ .icon {
+    color: var(--olive-primary);
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 2.5rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-light);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--text-main);
+    transition: all 0.2s;
+}
+
+.input-wrapper input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: var(--olive-primary);
+    box-shadow: var(--glow-soft);
+    background: var(--bg-main);
+}
+
+.input-wrapper input.input-error {
+    border-color: #dc2626;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.error-text {
+    display: block;
+    margin-top: 0.45rem;
+    color: #dc2626;
+    font-size: 0.8rem;
+    min-height: 1rem;
+}
+
+/* Password field with toggle button */
+#password {
+    padding-right: 2.8rem;
+}
+
+/* =============================================================================
+   PASSWORD TOGGLE
+   ============================================================================= */
+
+.password-toggle {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+    z-index: 10;
+}
+
+.password-toggle:hover {
+    color: var(--olive-primary);
+}
+
+.eye-icon.hidden {
+    display: none;
+}
+
+/* =============================================================================
+   FORGOT PASSWORD
+   ============================================================================= */
+
+.forgot-password {
+    text-align: right;
+    margin-bottom: 1.5rem;
+}
+
+.forgot-password a {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.forgot-password a:hover {
+    color: var(--olive-primary);
+    text-decoration: underline;
+}
+
+/* =============================================================================
+   BUTTONS
+   ============================================================================= */
+
+.btn-primary {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: var(--olive-primary);
+    color: #ffffff;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: var(--glow-soft);
+}
+
+.btn-primary:hover {
+    background: var(--olive-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-medium);
+}
+
+/* =============================================================================
+   DIVIDER
+   ============================================================================= */
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 2rem 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid var(--border-light);
+}
+
+.divider span {
+    padding: 0 1rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* =============================================================================
+   GOOGLE BUTTON
+   ============================================================================= */
+
+.btn-google {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border-light);
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.btn-google:hover {
+    background-color: var(--olive-primary);
+    color: #ffffff;
+    border-color: var(--olive-primary);
+    box-shadow: var(--glow-soft);
+}
+
+.btn-google svg {
+    transition: filter 0.3s ease;
+}
+
+.btn-google:hover svg {
+    filter: brightness(0) invert(1);
+}
+
+/* =============================================================================
+   TOGGLE AUTH
+   ============================================================================= */
+
+.toggle-auth {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.toggle-auth p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.toggle-auth button {
+    color: var(--olive-primary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-family: inherit;
+    font-weight: 600;
+    margin-left: 5px;
+    transition: opacity 0.2s;
+}
+
+.toggle-auth button:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+/* =============================================================================
+   RESPONSIVE
+   ============================================================================= */
+
+@media (max-width: 640px) {
+    .card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .app-name {
+        font-size: 22px;
+    }
+}
+
+
+/* ==========================================
+   LOTTIE LEFT SIDE (LOGIN PAGE)
+========================================== */
+
+.lottie-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Anchor animation LEFT */
+#lottie-animation {
+    position: absolute;
+    bottom: 0;
+    left: 5%;   /* slight shift outside screen */
+    width: 75vw; /* only take left half */
+    height: 100%;
+    transform: scale(1.8);   /* 🔥 increase size */
+    transform-origin: bottom left; /* scale from bottom-left corner */
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* push form to right */
+    padding-right: 12%;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    margin-left: auto;
+}
+
+/* ================= SELECT DROPDOWN ================= */
+
+.input-wrapper select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-light);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--text-main);
+    appearance: none; /* remove default arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Focus effect */
+.input-wrapper select:focus {
+    outline: none;
+    border-color: var(--olive-primary);
+    box-shadow: var(--glow-soft);
+    background: var(--bg-main);
+}
+
+/* Custom dropdown arrow */
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper::after {
+    content: "▼";
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    pointer-events: none;
+}
+@media (max-width: 1024px) {
+    body {
+        justify-content: center;
+        padding-right: 1.25rem;
+        padding-left: 1.25rem;
+    }
+
+    #lottie-animation {
+        opacity: 0.28;
+        left: -10%;
+        width: 95vw;
+        transform: scale(1.25);
+    }
+
+    .container {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        padding: 0.75rem;
+    }
+
+    .card {
+        padding: 1.4rem 1rem;
+        border-radius: 0.85rem;
+    }
+
+    .header {
+        margin-bottom: 1.5rem;
+    }
+
+    .header h1 {
+        font-size: 1.35rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .input-wrapper input,
+    .input-wrapper select,
+    .btn-primary,
+    .btn-google {
+        min-height: 48px;
+    }
+
+    #lottie-animation {
+        display: none;
+    }
+
+    .toggle-auth p {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+
+    .toggle-auth button {
+        margin-left: 0;
+    }
+}

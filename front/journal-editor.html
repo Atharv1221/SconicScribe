@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Journal Editor</title>
+<link rel="stylesheet" href="journal-editor.css">
+<script src="config.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</head>
+
+<body>
+
+<button class="top-back-btn" onclick="goBack()">← Go back</button>
+
+<div class="editor-container">
+
+<h2 id="templateTitle"></h2>
+
+<!-- ================= NOTES VIEW ================= -->
+<div id="notesView" style="display:none;">
+
+  <input type="text"
+    id="notesTopicInput"
+    class="topic-input"
+    placeholder="Enter topic name...">
+
+  <textarea id="notesContent"
+    class="notes-textarea"
+    placeholder="Start writing your note..."></textarea>
+
+  <div class="voice-controls">
+    <button id="notesMicBtn" type="button" class="voice-btn">Start Voice Typing</button>
+    <span id="notesVoiceStatus" class="voice-status">Press mic to dictate</span>
+  </div>
+
+  <button id="saveNotesBtn" class="save-btn">
+    Save Journal
+  </button>
+
+  <hr style="margin:40px 0">
+
+  <div id="savedNotes"></div>
+
+</div>
+
+<!-- ================= LIST MAIN VIEW ================= -->
+<div id="mainView" style="display:none;">
+
+  <input type="text"
+    id="topicInput"
+    class="topic-input"
+    placeholder="Enter topic name...">
+
+  <div class="item-input-wrapper">
+    <input type="text"
+      id="itemInput"
+      placeholder="Add item and press Enter...">
+    <button id="addItemBtn">Add</button>
+  </div>
+
+  <ul id="tempItemList"></ul>
+
+  <button id="saveContainerBtn" class="save-btn">
+    Save
+  </button>
+
+  <hr style="margin:40px 0">
+
+  <div id="savedContainers"></div>
+
+</div>
+
+<!-- ================= DETAIL VIEW ================= -->
+<div id="detailView" style="display:none;">
+
+  <button id="backBtn" class="back-btn">← Back</button>
+
+  <div class="detail-container">
+
+    <h2 id="detailTitle"></h2>
+
+    <div class="detail-input-wrapper">
+      <input type="text"
+        id="detailNewItemInput"
+        placeholder="Add new item...">
+      <button id="detailAddItemBtn">Add</button>
+    </div>
+
+    <ul id="detailItemList"></ul>
+
+    <div style="text-align:right;margin-top:25px;">
+      <button id="deleteContainerBtn">Delete List</button>
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+<div class="lottie-bottom">
+  <lottie-player
+    src="assets/Looping.json"
+    background="transparent"
+    speed="0.5"
+    loop
+    autoplay>
+  </lottie-player>
+</div>
+
+<script src="journal-editor.js"></script>
+</body>
+</html>

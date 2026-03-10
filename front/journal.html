@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal-Sconicscribe</title>
+
+<link rel="stylesheet" href="journal.css">
+<script src="config.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</head>
+<body>
+
+<div class="journal-container">
+    <button class="top-back-btn" onclick="goHome()">← Go back</button>
+
+    <h1 class="journal-title">Journal</h1>
+
+    <div class="template-grid">
+
+        <!-- Weekly -->
+        <div class="template-card" data-template="weekly">
+            <div class="card-inner">
+                <div class="lottie-box">
+                    <div id="weeklyAnim" class="lottie"></div>
+                </div>
+                <div class="template-title">To-Do</div>
+            </div>
+        </div>
+
+        <!-- Goals -->
+        <div class="template-card" data-template="goals">
+            <div class="card-inner">
+                <div class="lottie-box">
+                    <div id="goalsAnim" class="lottie"></div>
+                </div>
+                <div class="template-title">Goals</div>
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="template-card" data-template="notes">
+            <div class="card-inner">
+                <div class="lottie-box">
+                    <div id="notesAnim" class="lottie"></div>
+                </div>
+                <div class="template-title">Notes Page</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="lottie-bottom">
+  <lottie-player
+    src="assets/Looping.json"
+    background="transparent"
+    speed="0.5"
+    loop
+    autoplay>
+  </lottie-player>
+</div>
+
+<script src="journal.js"></script>
+</body>
+</html>

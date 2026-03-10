@@ -1,0 +1,235 @@
+/* ==============================
+   PAGE
+============================== */
+
+:root {
+  --bg-main: #f1f5f9;
+  --bg-elevated: #e2e8f0;
+  --surface-main: #ffffff;
+  --text-main: #1e293b;
+  --text-muted: #475569;
+  --olive-primary: #2563eb;
+  --olive-strong: #1d4ed8;
+  --border-light: #cbd5e1;
+  --glow-soft: 0 4px 20px rgba(37, 99, 235, 0.15);
+  --glow-medium: 0 8px 24px rgba(37, 99, 235, 0.25);
+}
+
+body {
+  margin: 0;
+  font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+  background: radial-gradient(circle at 20% 0%, #eef3ff 0%, #e5e9f4 45%, #e2e6f2 100%);
+  color: var(--text-main);
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 82% 14%, rgba(147, 197, 253, 0.24), transparent 35%),
+    radial-gradient(circle at 10% 78%, rgba(59, 130, 246, 0.12), transparent 34%);
+  z-index: -1;
+}
+
+.journal-container {
+  max-width: 1200px;
+  margin: 120px auto;
+  padding: 20px;
+}
+
+.journal-title {
+  text-align: center;
+  font-size: 34px;
+  margin-bottom: 70px;
+  color: var(--olive-strong);
+}
+
+/* ==============================
+   TEMPLATE GRID
+============================== */
+
+.template-grid {
+  display: flex;
+  justify-content: center;
+  gap: 90px;
+  flex-wrap: wrap;
+}
+
+/* ==============================
+   TEMPLATE CARD
+============================== */
+
+.template-card {
+  width: 330px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.template-card:hover {
+  transform: translateY(-8px);
+}
+
+/* SINGLE CONNECTED CARD */
+.card-inner {
+  border: 1px solid #b9c9eb;
+  border-radius: 35px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--glow-soft);
+}
+
+/* TOP ANIMATION AREA */
+.lottie-box {
+  height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid var(--border-light);
+  background: #eff6ff;
+}
+
+/* Bigger animation */
+.lottie {
+  width: 200px;
+  height: 200px;
+}
+
+/* BOTTOM TITLE STRIP */
+.template-title {
+  padding: 25px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  background: var(--bg-elevated);
+  color: var(--text-main);
+}
+
+/* ==============================
+   TOP LEFT BACK BUTTON
+============================== */
+
+.top-back-btn {
+  position: fixed;
+  top: 30px;
+  left: 40px;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 2px solid var(--olive-primary);
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--olive-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--glow-soft);
+}
+
+.top-back-btn:hover {
+  background: var(--olive-primary);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: var(--glow-medium);
+}
+
+.top-back-btn:active {
+  transform: scale(0.95);
+}
+
+
+.lottie-bottom {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Fill full width properly */
+.lottie-bottom lottie-player {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scale(1.4); /* increase scale if needed */
+  transform-origin: bottom center;
+
+  min-width: 100vw;
+  min-height: 100%;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .journal-container {
+    margin: 110px auto 60px;
+    padding: 16px;
+  }
+
+  .journal-title {
+    margin-bottom: 42px;
+    font-size: 30px;
+  }
+
+  .template-grid {
+    gap: 28px;
+  }
+
+  .template-card {
+    width: min(100%, 420px);
+  }
+
+  .top-back-btn {
+    top: 20px;
+    left: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .journal-container {
+    margin: 92px auto 36px;
+    padding: 12px;
+  }
+
+  .top-back-btn {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    width: 100%;
+  }
+
+  .journal-title {
+    font-size: 26px;
+    margin-bottom: 28px;
+  }
+
+  .template-grid {
+    gap: 20px;
+  }
+
+  .template-card {
+    width: 100%;
+  }
+
+  .card-inner {
+    border-radius: 24px;
+  }
+
+  .lottie-box {
+    height: 220px;
+  }
+
+  .lottie {
+    width: 160px;
+    height: 160px;
+  }
+
+  .template-title {
+    font-size: 18px;
+    padding: 18px;
+  }
+}
