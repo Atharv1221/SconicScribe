@@ -29,6 +29,9 @@ const DB_PORT = Number(process.env.DB_PORT || 3306);
 const DB_USER = process.env.DB_USER || "root";
 const DB_PASSWORD = process.env.DB_PASSWORD || "1234";
 const DB_NAME = process.env.DB_NAME || "voice_app";
+const DB_SSL = process.env.DB_SSL === "true";
+const DB_SSL_REJECT_UNAUTHORIZED = process.env.DB_SSL_REJECT_UNAUTHORIZED !== "false";
+const DB_SSL_CA = process.env.DB_SSL_CA || "";
 const SESSION_SECRET = process.env.SESSION_SECRET || "google_session_secret";
 const BACKEND_URL = process.env.BACKEND_URL || `http://localhost:${PORT}`;
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5500";
@@ -42,6 +45,25 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || [
   .filter(Boolean);
 
 const app = express();
+
+const dbConfig = {
+  host: DB_HOST,
+  port: DB_PORT,
+  user: DB_USER,
+  password: DB_PASSWORD,
+  database: DB_NAME,
+  timezone: "+05:30"
+};
+
+if (DB_SSL) {
+  dbConfig.ssl = {
+    rejectUnauthorized: DB_SSL_REJECT_UNAUTHORIZED
+  };
+
+  if (DB_SSL_CA) {
+    dbConfig.ssl.ca = DB_SSL_CA.replace(/\\n/g, "\n");
+  }
+}
 
 
 // ================= BASIC MIDDLEWARE =================
@@ -77,12 +99,7 @@ app.use(passport.session());
 
 // ================= MYSQL =================
 const db = mysql.createConnection({
-  host: DB_HOST,
-  port: DB_PORT,
-  user: DB_USER,
-  password: DB_PASSWORD,
-  database: DB_NAME,
-  timezone: "+05:30"
+  ...dbConfig
 });
 
 db.connect(err => {
